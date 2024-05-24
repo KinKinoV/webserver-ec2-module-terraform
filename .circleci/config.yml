@@ -27,15 +27,13 @@ jobs:
             terragrunt -v
       - checkout
       - run:
-          name: Configure test dependencies
+          name: Configure test dependencies and run tests
           command: |
             cd ./terratest/test/
             go mod init infra_test
             go mod tidy
-      - run:
-          name: Test terraform code using terratest + terragrunt
-          command: |
             go test -v -timeout 30m
+            
 
 workflows:
   test-workflow:
