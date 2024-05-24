@@ -13,7 +13,7 @@ jobs:
           name: Use tfsec to test Terraform for vulnerabilities
           command: |
             tfsec ./infrastructure/ -m CRITICAL
-  terratest-job:
+  terratest:
     docker:
       - image: cimg/go:1.22
     steps:
@@ -26,9 +26,9 @@ jobs:
             mv terragrunt /home/circleci/bin/terragrunt
             wget -O terraform.zip https://releases.hashicorp.com/terraform/1.8.4/terraform_1.8.4_linux_$ARCHITECTURE.zip
             unzip terraform.zip
-            ls -l
             chmod u+x terraform
             mv terraform /home/circleci/bin/terraform
+            rm *
             terraform -version
             terragrunt -v
       - checkout
@@ -39,12 +39,14 @@ jobs:
             go mod init infra_test
             go mod tidy
             go test -v -timeout 30m
+  # deploy:
             
 
 workflows:
   test-workflow:
     jobs:
       - security_test
-      - terratest-job:
+      - terratest:
+          context: AWS
           requires:
             - security_test
