@@ -51,10 +51,10 @@ func TestInfra(t *testing.T) {
 	dbInstanceData := terraform.OutputMap(t, terraformOptions, "db_ip")
 
 	// Tests
-	for instanceId, instanceIp := range instanceData {
+	for _, instanceIp := range instanceData {
 		assert.Equal(t, "200.100.1", GetFirstThreeOctets(instanceIp))
 	}
-	for dbInstanceId, dbInstanceIp := range dbInstanceData {
+	for _, dbInstanceIp := range dbInstanceData {
 		assert.Equal(t, "200.100.2", GetFirstThreeOctets(dbInstanceIp))
 	}
 }
