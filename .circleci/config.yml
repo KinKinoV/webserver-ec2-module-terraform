@@ -29,6 +29,7 @@ jobs:
       - run:
           name: Configure test dependencies and run tests
           command: |
+            terragrunt -v
             cd ./terratest/test/
             go mod init infra_test
             go mod tidy
