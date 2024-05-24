@@ -26,6 +26,7 @@ jobs:
             mv terragrunt /home/circleci/bin/terragrunt
             wget -O terraform.zip https://releases.hashicorp.com/terraform/1.8.4/terraform_1.8.4_linux_$ARCHITECTURE.zip
             unzip terraform.zip
+            ls -l
             chmod u+x terraform/terraform
             mv terraform/terraform /home/circleci/bin/terraform
             terraform -version
