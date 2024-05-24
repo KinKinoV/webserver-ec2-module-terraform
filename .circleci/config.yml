@@ -25,11 +25,18 @@ jobs:
             chmod u+x terragrunt
             mv terragrunt /home/circleci/bin/terragrunt
             terragrunt -v
+      - run:
+          name: Install terraform
+          command: |
+            wget -O terraform.zip https://releases.hashicorp.com/terraform/1.8.4/terraform_1.8.4_linux_$ARCHITECTURE.zip
+            unzip terraform.zip
+            chmod u+x terraform/terraform
+            mv terraform/terraform /home/circleci/bin/terraform
+            terraform -version
       - checkout
       - run:
           name: Configure test dependencies and run tests
           command: |
-            terragrunt -v
             cd ./terratest/test/
             go mod init infra_test
             go mod tidy
