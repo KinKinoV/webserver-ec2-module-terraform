@@ -18,21 +18,18 @@ jobs:
       - image: cimg/go:1.22
     steps:
       - run:
-          name: Install terragrunt
+          name: Install terragrunt and terraform
           command: |
             if [[ $(uname -m) == x86_64 ]]; then export ARCHITECTURE=amd64; else export ARCHITECTURE=arm64; fi
             wget -O terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v0.58.9/terragrunt_linux_$ARCHITECTURE
             chmod u+x terragrunt
             mv terragrunt /home/circleci/bin/terragrunt
-            terragrunt -v
-      - run:
-          name: Install terraform
-          command: |
             wget -O terraform.zip https://releases.hashicorp.com/terraform/1.8.4/terraform_1.8.4_linux_$ARCHITECTURE.zip
             unzip terraform.zip
             chmod u+x terraform/terraform
             mv terraform/terraform /home/circleci/bin/terraform
             terraform -version
+            terragrunt -v
       - checkout
       - run:
           name: Configure test dependencies and run tests
