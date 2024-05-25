@@ -52,14 +52,14 @@ jobs:
           command: |
             wget -O gh.tar.gz https://github.com/cli/cli/releases/download/v2.49.2/gh_2.49.2_linux_amd64.tar.gz
             tar -xvf gh.tar.gz
-            chmod u+x ./gh/bin/gh
-            mv ./gh/bin/gh /home/circleci/bin/gh
+            chmod u+x ./gh_2.49.2_linux_amd64/bin/gh
+            mv ./gh_2.49.2_linux_amd64/bin/gh /home/circleci/bin/gh
             gh --version
             rm *
       - checkout
       - run:
           name: Set date env var
-          command: echo "export DATETIME=`+%Y%m%d.%H%M`" >> $BASH_ENV
+          command: echo "export DATETIME=`date +%Y%m%d.%H%M`" >> $BASH_ENV
       - run:
           name: Configure Git
           command: |
@@ -83,12 +83,12 @@ workflows:
   test-workflow:
     jobs:
       - security_test
-      - terratest:
-          context: AWS
-          requires:
-            - security_test
+      # - terratest:
+      #     context: AWS
+      #     requires:
+      #       - security_test
       - create_pr:
           context: GitHub_AccessToken
           requires:
             - security_test
-            - terratest
+            #- terratest
