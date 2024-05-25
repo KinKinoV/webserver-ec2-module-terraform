@@ -55,7 +55,7 @@ jobs:
             chmod u+x ./gh_2.49.2_linux_amd64/bin/gh
             mv ./gh_2.49.2_linux_amd64/bin/gh /home/circleci/bin/gh
             gh --version
-            rm *
+            rm -r *
       - checkout
       - run:
           name: Set date env var
