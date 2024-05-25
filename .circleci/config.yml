@@ -83,12 +83,12 @@ workflows:
   test-workflow:
     jobs:
       - security_test
-      # - terratest:
-      #     context: AWS
-      #     requires:
-      #       - security_test
+      - terratest:
+          context: AWS
+          requires:
+            - security_test
       - create_pr:
           context: GitHub_AccessToken
           requires:
             - security_test
-            #- terratest
+            - terratest
