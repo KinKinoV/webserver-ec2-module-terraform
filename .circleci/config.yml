@@ -78,7 +78,7 @@ workflows:
       or:
         - not: 
             # Skipping all [create pr] commits so that testing jobs don't trigger twice
-            matches: {pattern: "\\[create pr\\]", value: << pipeline.parameters.commit_msg >>}
+            matches: {pattern: ".*create pr.*", value: << pipeline.parameters.commit_msg >>}
         # Matching main branch with or statement so that "[create pr] ... " commit on main branch still triggers tests
         - equal: [main, << pipeline.git.branch >>]
     jobs:
@@ -92,7 +92,7 @@ workflows:
   test-and-pr:
     when:
       and:
-        - matches: {pattern: "\\[create pr\\]", value: << pipeline.parameters.commit_msg >>}
+        - matches: {pattern: ".*create pr.*", value: << pipeline.parameters.commit_msg >>}
         - not: 
             equal: [main, << pipeline.git.branch >>]
     jobs:
