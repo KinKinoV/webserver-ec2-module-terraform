@@ -25,11 +25,11 @@ terraform destroy
 1. Create new branch and switch to it
 2. Make changes in `./infrastructure` directory so that new environment doesn't conflict with other ones
 3. Make commit with changes (optionally use `[skip_tests]` in commit message to skip general tests)
-Example:
-```bash
-git commit -m "[skip_tests] Made changes in params file for new env"
-```
-If there is no need to make changes make empty commit: `git commit --allow-empty -m "[skip_tests] Create new env"`.
+  Example:
+  ```bash
+  git commit -m "[skip_tests] Made changes in params file for new env"
+  ```
+  If there is no need to make changes make empty commit: `git commit --allow-empty -m "[skip_tests] Create new env"`.
 4. CI pipeline will create all needed files and configs for FluxCD and new PR into main branch
 5. After accepting PR, FluxCD will automatically pick up new environment from `kubernetes/.../apps/tf-app` folder in repo and deploy needed infrastructure
 
