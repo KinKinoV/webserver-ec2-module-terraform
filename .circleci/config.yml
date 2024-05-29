@@ -103,6 +103,10 @@ jobs:
             if $ENV_EXISTS; then
               echo "Environment exists, skipping..."
             else
+              echo "Required dirs location:"
+              echo "tf-app: $TF_APP_DIR"
+              echo "fluxcd: $FLUXCD_DIR"
+              echo "templates: $TEMPLATES_DIR"
               mkdir $TF_APP_DIR/$CIRCLE_BRANCH
               envsubst < $TEMPLATES_DIR/gitrepository.yaml > $TF_APP_DIR/$CIRCLE_BRANCH/gitrepository.yaml
               envsubst < $TEMPLATES_DIR/terraform.yaml > $TF_APP_DIR/$CIRCLE_BRANCH/terraform.yaml
@@ -128,12 +132,15 @@ jobs:
 workflows:
   just-test:
     when:
-      or:
-        - not: 
-            # Skipping all [create pr] commits so that testing jobs don't trigger twice
-            matches: {pattern: ".*create pr.*", value: << pipeline.parameters.commit_msg >>}
-        # Matching main branch with or statement so that "[create pr] ... " commit on main branch still triggers tests
-        - equal: [main, << pipeline.git.branch >>]
+      and:
+        - or:
+          - not: 
+              # Skipping all [create pr] commits so that testing jobs don't trigger twice
+              matches: {pattern: ".*create_pr.*", value: << pipeline.parameters.commit_msg >>}
+          # Matching main branch with or statement so that "[create pr] ... " commit on main branch still triggers tests
+          - equal: [main, << pipeline.git.branch >>]
+        - not:
+            matches: {pattern: ".*skip_tests.*", value: << pipeline.parameters.commit_msg >>}
     jobs:
       - security_test
       - terratest:
@@ -145,7 +152,7 @@ workflows:
   test-and-pr:
     when:
       and:
-        - matches: {pattern: ".*create pr.*", value: << pipeline.parameters.commit_msg >>}
+        - matches: {pattern: ".*create_pr.*", value: << pipeline.parameters.commit_msg >>}
         - not: 
             equal: [main, << pipeline.git.branch >>]
     jobs:
