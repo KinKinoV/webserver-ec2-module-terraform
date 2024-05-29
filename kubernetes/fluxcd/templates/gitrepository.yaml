@@ -1,10 +1,10 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
-  name: tf-app-production
+  name: tf-app-$CIRCLE_BRANCH
   namespace: flux-system
 spec:
   interval: 1m0s
   ref:
-    branch: production
+    branch: $CIRCLE_BRANCH
   url: https://github.com/KinKinoV/webserver-ec2-module-terraform
