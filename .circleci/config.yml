@@ -73,7 +73,7 @@ jobs:
     docker:
       - image: cimg/base:current
     environment:
-      TEMPALTES_DIR: ./kubernetes/fluxcd/templates
+      TEMPLATES_DIR: ./kubernetes/fluxcd/templates
       TF_APP_DIR: ./kubernetes/fluxcd/repositories/infra-repo/apps/tf-app
       FLUXCD_DIR: ./kubernetes/fluxcd/repositories/infra-repo/clusters/dev-cluster/tf-app
     steps:
