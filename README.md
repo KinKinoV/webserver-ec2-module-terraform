@@ -29,7 +29,8 @@ terraform destroy
   ```bash
   git commit -m "[skip_tests] Made changes in params file for new env"
   ```
-  If there is no need to make changes make empty commit: `git commit --allow-empty -m "[skip_tests] Create new env"`.
+  If there is no need to make changes make empty commit: `git commit --allow-empty -m "[skip_tests] Create new env"`
+
 4. CI pipeline will create all needed files and configs for FluxCD and new PR into main branch
 5. After accepting PR, FluxCD will automatically pick up new environment from `kubernetes/.../apps/tf-app` folder in repo and deploy needed infrastructure
 
